@@ -1,0 +1,37 @@
+.flex {
+  display: flex;
+}
+
+.InputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  margin-top: 20px;
+}
+
+.plus {
+  margin-bottom: 20px; 
+}
+
+.minus {
+  margin-bottom: 20px;
+}
+
+.mark {
+  font-size: 40px;
+  margin-right: 10px;
+  height: 40px;
+  width: 40px;
+}
+
+.buttonIn {
+  margin-left: 10px;
+}
+
+.buttonOut {
+  margin-left: 10px;
+  background-color: red;
+}

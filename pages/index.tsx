@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Wallet from './components/Wallet';
+import InputForm from './components/InputForm';
 
 export default function Home() {
   return (
@@ -13,8 +14,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className='text-center mt-4 mb-3'>My-Wallet</h1>
+      <h1 className='text-center pt-3 pb-3 mb-3 bg-info text-white'>My-Wallet</h1>
       <Wallet />
+      <InputForm />
     </div>
   )
 }
