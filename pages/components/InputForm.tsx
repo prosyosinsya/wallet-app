@@ -5,13 +5,14 @@ import styles from "./InputForm.module.css"
 
 const InputForm = () => {
   return (
-    <div className={styles.InputContainer}>
+    <div className={`${styles.InputContainer}`}>
       <div className={styles.plus}>
         <Form>
           <div className={`${styles.FormContainer} ${styles.flex}`}>
             <Form.Group className={styles.flex}  controlId="formBasicEmail">
               <Form.Label className={styles.mark}>+</Form.Label>
-              <Form.Control type="email" placeholder="入金" className='' />
+              <Form.Control type="text" placeholder="入金内容" className='' required />
+              <Form.Control type="number" placeholder="入金額" className='' required />
             </Form.Group>
             <Button variant="primary" type="submit" className={styles.buttonIn}>
               確認
@@ -24,7 +25,8 @@ const InputForm = () => {
           <div className={`${styles.FormContainer} ${styles.flex}`}>
             <Form.Group className={styles.flex}  controlId="formBasicEmail">
               <Form.Label className={styles.mark}>-</Form.Label>
-              <Form.Control type="email" placeholder="出金" className='' />
+              <Form.Control type="text" placeholder="出金内容" className='' required />
+              <Form.Control type="number" placeholder="出金額" className='' required />
             </Form.Group>
             <Button variant="primary" type="submit" className={styles.buttonOut}>
               確認
