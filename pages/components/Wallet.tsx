@@ -1,35 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "./Wallet.module.css"
+import counter from "./InputForm"
 
-const Wallet = () => {
+const Wallet = () => {  
   return (
     <div>
       <span className='text-center'>
-        <h3 className="fs-3">合計金額</h3>
+        <h3 className="fs-3">所持金</h3>
         <div className={styles.all}>
           <span className={styles.WalletNumber}>
-            0円
+            {}円
           </span>
         </div>
       </span>
-      <div className={styles.EachWallet}>
-        <span className={styles.flex}>
-          <h3 className={styles.label}>現金</h3>
-          <div className={`${styles.cash} ${styles.wallet}`}>
-            <span className={styles.CashNumber}>
-              0円
-            </span>
-          </div>
-        </span>
-        <span className={styles.flex}>
-          <h3 className={styles.label}>電子</h3>
-          <div className={`${styles.elec} ${styles.wallet}`}>
-            <span className={styles.ElecNumber}>
-              0円
-            </span>
-          </div>
-        </span>
-      </div>
     </div>
   )
 }
