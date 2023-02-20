@@ -1,8 +1,7 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Wallet from './components/Wallet';
+// import Wallet from './components/Wallet';
 import InputForm from './components/InputForm';
 import History from './components/History';
 
@@ -16,7 +15,6 @@ export default function Home() {
       </Head>
 
       <h1 className='text-center pt-3 pb-3 mb-3 bg-info text-white'>My-Wallet</h1>
-      <Wallet />
       <InputForm />
       <History />
     </div>

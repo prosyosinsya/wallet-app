@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import styles from "./InputForm.module.css"
+import styles from "./InputForm.module.css";
+import Wallet from './Wallet';
+
 
 const InputForm = () => {
   const [counter, setCounter] = useState<number>(0);
@@ -9,15 +11,12 @@ const InputForm = () => {
 
   const handlePlus = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCounter(counter + plus);
+    setCounter((prev) => prev + plus);
   }
-
-  useEffect(() => {
-    console.log(counter);
-  }, [counter]) 
   
   return (
     <div className={`${styles.InputContainer}`}>
+      <Wallet counter={counter}/>
       <div className={styles.plus}>
         <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handlePlus(e)}>
           <div className={`${styles.FormContainer} ${styles.flex}`}>
