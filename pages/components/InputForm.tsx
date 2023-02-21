@@ -3,8 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import styles from "./InputForm.module.css";
 import Wallet from './Wallet';
-
-
+import History from './History';
 
 const InputForm = () => {
   const [counter, setCounter] = useState<number>(0);
@@ -56,9 +55,7 @@ const InputForm = () => {
           </div>
         </Form>
       </div>
-      <div className="minus">
-
-      </div>
+      <History />
     </div>
   )
 }
