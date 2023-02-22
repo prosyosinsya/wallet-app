@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./History.module.css"
 import { db } from "../firebase"
-import { doc, collection, getDocs, QueryDocumentSnapshot, DocumentData } from "firebase/firestore";
+import { doc, collection, getDocs, QueryDocumentSnapshot, DocumentData, onSnapshot, limit, query, orderBy} from "firebase/firestore";
 
 interface History {
   content: string,
@@ -10,13 +10,13 @@ interface History {
 }
 
 const History = () => {
-  const [history, setHistory] = useState<History[] | DocumentData>([]);
+  const [plusHistory, setPlusHistory] = useState<History[] | DocumentData>([]);
 
   useEffect(() => {
-    const historyData = collection(db, "history");
-    getDocs(historyData).then((snapShot) => {
-      setHistory(snapShot.docs.map((doc) => doc.data()));   
-      console.log(historyData);
+    const plusHistory = collection(db, "plusHistory");
+    const historyData = query(plusHistory, orderBy("time", "desc"), limit(5));
+    onSnapshot(historyData, (plusHis) => {
+      setPlusHistory(plusHis.docs.map((his) => his.data()));
     });
   }, []);
 
@@ -25,10 +25,10 @@ const History = () => {
       <div className={styles.container}>
         <h3 className="title">入金履歴</h3>
         <div className="AllHistory">
-          {history.map((his: History) => (
+          {plusHistory.map((his: History) => (
           <div className={styles.history} key={his.time}>
             <h4 className={styles.SecTitle}>{his.content}</h4>
-            <p className={styles.number}>{his.price}</p>
+            <p className={styles.number}>{his.price}円</p>
           </div>
           ))}
         </div>
