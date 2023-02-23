@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./History.module.css"
 import { db } from "../firebase"
-import { doc, collection, getDocs, QueryDocumentSnapshot, DocumentData, onSnapshot, limit, query, orderBy} from "firebase/firestore";
+import { doc, collection, getDocs, deleteDoc, DocumentData, onSnapshot, query, limit, orderBy} from "firebase/firestore";
+import Button from 'react-bootstrap/Button';
 
 interface History {
   content: string,
   price: number,
   time: number,
+  id: string,
 }
 
 const History = () => {
@@ -16,9 +18,16 @@ const History = () => {
     const plusHistory = collection(db, "plusHistory");
     const historyData = query(plusHistory, orderBy("time", "desc"), limit(5));
     onSnapshot(historyData, (plusHis) => {
-      setPlusHistory(plusHis.docs.map((his) => his.data()));
+      setPlusHistory(plusHis.docs.map((his) => ({
+        ...his.data(),
+        id: his.id,
+      })));
     });
   }, []);
+
+  const handleDelete = async (his: History) => {
+    await deleteDoc(doc(db, "plusHistory", his.id));
+  }
 
   return (
     <div className={styles.HistoryContainer}>
@@ -27,6 +36,7 @@ const History = () => {
         <div className="AllHistory">
           {plusHistory.map((his: History) => (
           <div className={styles.history} key={his.time}>
+            <Button className={styles.deleteBtn} variant="danger" onClick={() => handleDelete(his)}>消去</Button>{' '}
             <h4 className={styles.SecTitle}>{his.content}</h4>
             <p className={styles.number}>{his.price}円</p>
           </div>
