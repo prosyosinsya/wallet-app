@@ -20,7 +20,6 @@ const InputForm = () => {
 
   const handlePlus = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // new Date();
     setCounter((prev) => prev + plus);
     handleSetPlus();
     clearPlusRef.current.value = "";
@@ -30,13 +29,23 @@ const InputForm = () => {
   const handleMinus = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCounter((prev) => prev - minus);
+    handleSetMinus();
     clearMinusRef.current.value = "";
+    clearMinusContentRef.current.value = "";
   }
 
   const handleSetPlus = async () => {
     const docRef = await addDoc(collection(db, "plusHistory"), {
       content: plusContent,
       price: plus,
+      time: new Date(),
+    });
+  }
+
+  const handleSetMinus = async () => {
+    const docRef = await addDoc(collection(db, "minusHistory"), {
+      content: minusContent,
+      price: minus,
       time: new Date(),
     });
   }
@@ -63,7 +72,7 @@ const InputForm = () => {
           <div className={`${styles.FormContainer} ${styles.flex}`}>
             <Form.Group className={styles.flex}  controlId="formBasicEmail">
               <Form.Label className={styles.mark}>-</Form.Label>
-              <Form.Control type="text" placeholder="出金内容" className='' required />
+              <Form.Control type="text" placeholder="出金内容" className='' required onChange={(e) => setMinusContent(e.target.value)} ref={clearMinusContentRef} />
               <Form.Control type="number" placeholder="出金額" className='' onChange={(e) => setMinus(parseInt(e.target.value))} ref={clearMinusRef} required />
             </Form.Group>
             <Button variant="primary" type="submit" className={styles.buttonOut}>
@@ -72,7 +81,7 @@ const InputForm = () => {
           </div>
         </Form>
       </div>
-      <History />
+      <History setCounter={setCounter} />
     </div>
   )
 }
