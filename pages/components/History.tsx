@@ -1,8 +1,9 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import styles from "./History.module.css"
 import { db } from "../firebase"
-import { doc, collection, getDocs, deleteDoc, DocumentData, onSnapshot, query, limit, orderBy} from "firebase/firestore";
+import { doc, collection, deleteDoc, DocumentData, onSnapshot, query, limit, orderBy} from "firebase/firestore";
 import Button from 'react-bootstrap/Button';
+import { format } from 'date-fns'
 
 interface History {
   content: string,
@@ -23,6 +24,7 @@ const History = (props: {setCounter: Dispatch<SetStateAction<number>>}) => {
       setPlusHistory(plusHis.docs.map((his) => ({
         ...his.data(),
         id: his.id,
+        time: his.data().time.toDate()
       })));
     });
     const minusHistoryData = query(minusHistory, orderBy("time", "desc"), limit(5));
@@ -30,6 +32,7 @@ const History = (props: {setCounter: Dispatch<SetStateAction<number>>}) => {
       setMinusHistory(minusHis.docs.map((his) => ({
         ...his.data(),
         id: his.id,
+        time: his.data().time.toDate()
       })));
     });
   }, []);
@@ -50,7 +53,8 @@ const History = (props: {setCounter: Dispatch<SetStateAction<number>>}) => {
         <h3 className="title">入金履歴</h3>
         <div className="AllHistory">
           {plusHistory.map((his: History) => (
-          <div className={styles.history} key={his.time}>
+          <div className={styles.history} key={his.id}>
+            <span className={styles.time}>{format(his.time, 'yyyy/MM/dd/HH:mm:ss')}</span>
             <Button className={styles.deleteBtn} variant="danger" onClick={() => handlePlusDelete(his)}>消去</Button>{' '}
             <h4 className={styles.SecTitle}>{his.content}</h4>
             <p className={styles.number}>{his.price}円</p>

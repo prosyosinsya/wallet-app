@@ -13,13 +13,13 @@
   margin-bottom: 20px;
 }
 
-.plus {
-  margin-top: 20px;
-  margin-bottom: 20px; 
-}
-
-.minus {
-  margin-bottom: 20px;
+.inputFlex {
+  display: flex;
+  justify-content: space-around;
+  gap: 5px;
+  align-items: center;
+  width: 100%;
+  margin: 0 0 30px;
 }
 
 .mark {
@@ -29,6 +29,10 @@
   width: 60px;
 }
 
+.formControlContainer {
+  display: flex;
+}
+
 .buttonIn {
   margin-left: 10px;
 }
@@ -36,4 +40,31 @@
 .buttonOut {
   margin-left: 10px;
   background-color: red;
+}
+
+@media screen and (max-width: 400px) {
+  .buttonIn,
+  .buttonOut {
+    font-size: 10px;
+  }
+} @media screen and (max-width: 605px) {
+  .mark {
+    margin-top: 15px;
+  }
+  .formControlContainer {
+    flex-direction: column;
+  }
+  .buttonIn,
+  .buttonOut {
+    height: 40px;
+    margin-top: 18px;
+  }
+} @media screen and (max-width: 1150px) {
+  .inputFlex {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
 }

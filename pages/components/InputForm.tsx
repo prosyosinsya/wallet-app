@@ -4,8 +4,9 @@ import Form from 'react-bootstrap/Form';
 import styles from "./InputForm.module.css";
 import Wallet from './Wallet';
 import History from './History';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
+import firebase from 'firebase/compat/app'
 
 const InputForm = () => {
   const [counter, setCounter] = useState<number>(0);
@@ -20,18 +21,26 @@ const InputForm = () => {
 
   const handlePlus = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCounter((prev) => prev + plus);
-    handleSetPlus();
     clearPlusRef.current.value = "";
     clearPlusContentRef.current.value = "";
+    if (plus <= 100000) {
+      setCounter((prev) => prev + plus);
+      handleSetPlus();
+    } else {
+      return;
+    }
   }
 
   const handleMinus = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setCounter((prev) => prev - minus);
-    handleSetMinus();
     clearMinusRef.current.value = "";
     clearMinusContentRef.current.value = "";
+    if (minus <= 100000) {
+      setCounter((prev) => prev - minus);
+      handleSetMinus();
+    } else {
+      return;
+    }
   }
 
   const handleSetPlus = async () => {
@@ -51,36 +60,75 @@ const InputForm = () => {
   }
   
   return (
-    <div className={`${styles.InputContainer}`}>
-      <Wallet counter={counter}/>
-      <div className={styles.plus}>
-        <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handlePlus(e)}>
-          <div className={`${styles.FormContainer} ${styles.flex}`}>
-            <Form.Group className={styles.flex}  controlId="formBasicEmail">
-              <Form.Label className={styles.mark}>+</Form.Label>
-              <Form.Control type="text" placeholder="入金内容" className='' required onChange={(e) => setPlusContent(e.target.value)} ref={clearPlusContentRef} />
-              <Form.Control type="number" placeholder="入金額" className='plusNumber' onChange={(e) => setPlus(parseInt(e.target.value))} ref={clearPlusRef} required />
-            </Form.Group>
-            <Button variant="primary" type="submit" className={styles.buttonIn}>
-              確認
-            </Button>
-          </div>
-        </Form>
+    <div className={styles.InputContainer}>
+      <Wallet counter={counter} setCounter={setCounter}/>
+      <div className={styles.inputFlex}>
+        <div className='plus'>
+          <h2>収入</h2>
+          <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handlePlus(e)}>
+            <div className={`${styles.FormContainer} ${styles.flex}`}>
+              <Form.Group className={styles.flex}  controlId="formBasicEmail">
+                <Form.Label className={styles.mark}>+</Form.Label>
+                <div className={styles.formControlContainer}>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="入金内容(例: 給料)" 
+                    className='plusContent' 
+                    required 
+                    onChange={(e) => setPlusContent(e.target.value)} 
+                    ref={clearPlusContentRef}
+                  />
+                  <Form.Control 
+                    type="number" 
+                    placeholder="入金額(例: 1000)" 
+                    className='plusNumber' 
+                    required 
+                    onChange={(e) => setPlus(parseInt(e.target.value))} 
+                    ref={clearPlusRef} 
+                    autoComplete="off"
+                  />
+                </div>
+              </Form.Group>
+              <Button variant="primary" type="submit" className={styles.buttonIn}>
+                確認
+              </Button>
+            </div>
+          </Form>
+        </div>
+        <div className='minus'>
+          <h2>出費</h2>
+          <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleMinus(e)}>
+            <div className={`${styles.FormContainer} ${styles.flex}`}>
+              <Form.Group className={styles.flex}  controlId="formBasicEmail">
+                <Form.Label className={styles.mark}>-</Form.Label>
+                <div className={styles.formControlContainer}>
+                  <Form.Control 
+                    type="text" 
+                    placeholder="出金内容(例: 食事代)" 
+                    className='minusContent' 
+                    required 
+                    onChange={(e) => setMinusContent(e.target.value)} 
+                    ref={clearMinusContentRef} 
+                  />
+                  <Form.Control 
+                    type="number" 
+                    placeholder="出金額(例: 1000)" 
+                    className='minusNumber' 
+                    onChange={(e) => setMinus(parseInt(e.target.value))} 
+                    ref={clearMinusRef} 
+                    required 
+                    autoComplete='off'
+                  />
+                </div>
+              </Form.Group>
+              <Button variant="primary" type="submit" className={styles.buttonOut}>
+                確認
+              </Button>
+            </div>
+          </Form>
+        </div>
       </div>
-      <div className={styles.minus}>
-        <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleMinus(e)}>
-          <div className={`${styles.FormContainer} ${styles.flex}`}>
-            <Form.Group className={styles.flex}  controlId="formBasicEmail">
-              <Form.Label className={styles.mark}>-</Form.Label>
-              <Form.Control type="text" placeholder="出金内容" className='' required onChange={(e) => setMinusContent(e.target.value)} ref={clearMinusContentRef} />
-              <Form.Control type="number" placeholder="出金額" className='' onChange={(e) => setMinus(parseInt(e.target.value))} ref={clearMinusRef} required />
-            </Form.Group>
-            <Button variant="primary" type="submit" className={styles.buttonOut}>
-              確認
-            </Button>
-          </div>
-        </Form>
-      </div>
+
       <History setCounter={setCounter} />
     </div>
   )

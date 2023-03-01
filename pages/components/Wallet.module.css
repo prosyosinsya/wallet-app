@@ -11,7 +11,7 @@
   width: 300px;
   height: 50px;
   border: 1px solid black;
-  margin: 0 auto 20px; 
+  margin: 0 auto 10px; 
 }
 
 .WalletNumber {
@@ -27,3 +27,31 @@
   border: 1px solid black;
   align-items: center;
 }  
+
+.btn {
+  position: absolute;
+  right: -70px;
+  top: 5px; 
+  box-shadow: 0px 5px black
+}
+
+.pushBtn {
+  position: absolute;
+  right: -70px;
+  top: 5px; 
+  box-shadow: none;
+  transform: translateY(5px);
+  transition: .2s;
+}
+
+@media screen and (max-width: 605px) {
+  .all {
+    margin-bottom: 60px;
+  }
+  .btn,
+  .pshtBtn {
+    right: 120px;
+    top: 60px;
+  }
+
+}
