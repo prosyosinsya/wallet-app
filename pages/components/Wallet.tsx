@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
-import styles from "./Wallet.module.css"
+import styles from "../../styles/components.css/Wallet.module.css"
 import Button from 'react-bootstrap/Button';
 import { collection, query, limit, orderBy, addDoc, getDocs, QuerySnapshot, DocumentData, QueryDocumentSnapshot } from "firebase/firestore"
 import { db } from "../firebase"

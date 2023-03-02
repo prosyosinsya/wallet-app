@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import styles from "./InputForm.module.css";
+import styles from "../../styles/components.css/InputForm.module.css";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Wallet from './Wallet';
