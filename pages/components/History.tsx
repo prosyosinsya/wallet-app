@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import styles from "../../styles/components.css/History.module.css"
 import Button from 'react-bootstrap/Button'
-import { db } from "../firebase"
+import db from "../firebase"
 import { doc, collection, deleteDoc, DocumentData, onSnapshot, query, limit, orderBy} from "firebase/firestore"
 import { format } from 'date-fns'
 

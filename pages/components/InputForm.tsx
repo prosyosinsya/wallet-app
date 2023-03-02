@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Wallet from './Wallet';
 import History from './History';
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import db from "../firebase";
 
 const InputForm = () => {
   const [counter, setCounter] = useState<number>(0);
