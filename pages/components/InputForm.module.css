@@ -2,7 +2,7 @@
   display: flex;
 }
 
-.InputContainer {
+.allContentContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,7 +13,7 @@
   margin-bottom: 20px;
 }
 
-.inputFlex {
+.inputFormContainer {
   display: flex;
   justify-content: space-around;
   gap: 5px;
@@ -33,13 +33,8 @@
   display: flex;
 }
 
-.buttonIn {
+.button {
   margin-left: 10px;
-}
-
-.buttonOut {
-  margin-left: 10px;
-  background-color: red;
 }
 
 @media screen and (max-width: 400px) {
@@ -60,7 +55,7 @@
     margin-top: 18px;
   }
 } @media screen and (max-width: 1150px) {
-  .inputFlex {
+  .inputFormContainer {
     margin-top: 10px;
     display: flex;
     flex-direction: column;

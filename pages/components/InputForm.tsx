@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
+import styles from "./InputForm.module.css";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import styles from "./InputForm.module.css";
 import Wallet from './Wallet';
 import History from './History';
-import { collection, addDoc, doc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
-import firebase from 'firebase/compat/app'
 
 const InputForm = () => {
   const [counter, setCounter] = useState<number>(0);
@@ -14,44 +13,45 @@ const InputForm = () => {
   const [minus, setMinus] = useState<number>(0);
   const [plusContent, setPlusContent] = useState<string>("");
   const [minusContent, setMinusContent] = useState<string>("");
+  //form送信後、入力内容をクリア
   const clearPlusRef = useRef<HTMLInputElement>(null!);
   const clearMinusRef = useRef<HTMLInputElement>(null!);
   const clearPlusContentRef = useRef<HTMLInputElement>(null!);
   const clearMinusContentRef = useRef<HTMLInputElement>(null!);
 
+  //所持金の引き足し算+handlePutDataを誘発
   const handlePlus = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     clearPlusRef.current.value = "";
     clearPlusContentRef.current.value = "";
     if (plus <= 100000) {
       setCounter((prev) => prev + plus);
-      handleSetPlus();
+      handlePutDataPlus();
     } else {
       return;
     }
   }
-
   const handleMinus = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     clearMinusRef.current.value = "";
     clearMinusContentRef.current.value = "";
     if (minus <= 100000) {
       setCounter((prev) => prev - minus);
-      handleSetMinus();
+      handlePutDataMinus();
     } else {
       return;
     }
   }
 
-  const handleSetPlus = async () => {
+  //firestoreに履歴データを格納
+  const handlePutDataPlus = async () => {
     const docRef = await addDoc(collection(db, "plusHistory"), {
       content: plusContent,
       price: plus,
       time: new Date(),
     });
   }
-
-  const handleSetMinus = async () => {
+  const handlePutDataMinus = async () => {
     const docRef = await addDoc(collection(db, "minusHistory"), {
       content: minusContent,
       price: minus,
@@ -60,13 +60,13 @@ const InputForm = () => {
   }
   
   return (
-    <div className={styles.InputContainer}>
+    <div className={styles.allContentContainer}>
       <Wallet counter={counter} setCounter={setCounter}/>
-      <div className={styles.inputFlex}>
+      <div className={styles.inputFormContainer}>
         <div className='plus'>
           <h2>収入</h2>
           <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handlePlus(e)}>
-            <div className={`${styles.FormContainer} ${styles.flex}`}>
+            <div className={styles.flex}>
               <Form.Group className={styles.flex}  controlId="formBasicEmail">
                 <Form.Label className={styles.mark}>+</Form.Label>
                 <div className={styles.formControlContainer}>
@@ -89,7 +89,7 @@ const InputForm = () => {
                   />
                 </div>
               </Form.Group>
-              <Button variant="primary" type="submit" className={styles.buttonIn}>
+              <Button variant="primary" type="submit" className={styles.button}>
                 確認
               </Button>
             </div>
@@ -98,7 +98,7 @@ const InputForm = () => {
         <div className='minus'>
           <h2>出費</h2>
           <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleMinus(e)}>
-            <div className={`${styles.FormContainer} ${styles.flex}`}>
+            <div className={styles.flex}>
               <Form.Group className={styles.flex}  controlId="formBasicEmail">
                 <Form.Label className={styles.mark}>-</Form.Label>
                 <div className={styles.formControlContainer}>
@@ -121,14 +121,13 @@ const InputForm = () => {
                   />
                 </div>
               </Form.Group>
-              <Button variant="primary" type="submit" className={styles.buttonOut}>
+              <Button variant="danger" type="submit" className={styles.button}>
                 確認
               </Button>
             </div>
           </Form>
         </div>
       </div>
-
       <History setCounter={setCounter} />
     </div>
   )

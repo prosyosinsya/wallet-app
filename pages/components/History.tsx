@@ -1,78 +1,90 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import styles from "./History.module.css"
+import Button from 'react-bootstrap/Button'
 import { db } from "../firebase"
-import { doc, collection, deleteDoc, DocumentData, onSnapshot, query, limit, orderBy} from "firebase/firestore";
-import Button from 'react-bootstrap/Button';
+import { doc, collection, deleteDoc, DocumentData, onSnapshot, query, limit, orderBy} from "firebase/firestore"
 import { format } from 'date-fns'
 
-interface History {
+interface typeHistory {
   content: string,
   price: number,
   time: number,
   id: string,
 }
 
-const History = (props: {setCounter: Dispatch<SetStateAction<number>>}) => {
-  const [plusHistory, setPlusHistory] = useState<History[] | DocumentData>([]);
-  const [minusHistory, setMinusHistory] = useState<History[] | DocumentData>([]);
+const History = (
+  props: {setCounter: Dispatch<SetStateAction<number>>
+}) => {
+  const [storagePlusHistory, setStoragePlusHistory] = useState<typeHistory[] | DocumentData>([]);
+  const [storageMinusHistory, setStorageMinusHistory] = useState<typeHistory[] | DocumentData>([]);
 
   useEffect(() => {
+    // マウント時に入金履歴を読み取る
     const plusHistory = collection(db, "plusHistory");
-    const minusHistory = collection(db, "minusHistory");
+    //最新のものから5つ
     const plusHistoryData = query(plusHistory, orderBy("time", "desc"), limit(5));
     onSnapshot(plusHistoryData, (plusHis) => {
-      setPlusHistory(plusHis.docs.map((his) => ({
+      setStoragePlusHistory(plusHis.docs.map((his) => ({
         ...his.data(),
         id: his.id,
-        time: his.data().time.toDate()
+        time: his.data().time.toDate(),
       })));
     });
+
+    //マウント時に出金履歴を読み取る
+    const minusHistory = collection(db, "minusHistory");
+    //最新のものから5つ
     const minusHistoryData = query(minusHistory, orderBy("time", "desc"), limit(5));
     onSnapshot(minusHistoryData, (minusHis) => {
-      setMinusHistory(minusHis.docs.map((his) => ({
+      setStorageMinusHistory(minusHis.docs.map((his) => ({
         ...his.data(),
         id: his.id,
-        time: his.data().time.toDate()
+        time: his.data().time.toDate(),
       })));
     });
   }, []);
 
-  const handlePlusDelete = async (his: History) => {
+  //履歴を消す際の処理
+  const handleDeletePlus = async (his: typeHistory) => {
     await deleteDoc(doc(db, "plusHistory", his.id));
     props.setCounter((prev) => prev - his.price);
   }
-
-  const handleMinusDelete = async (his: History) => {
+  const handleDeleteMinus = async (his: typeHistory) => {
     await deleteDoc(doc(db, "minusHistory", his.id));
     props.setCounter((prev) => prev + his.price);
   }
 
   return (
-    <div className={styles.HistoryContainer}>
-      <div className={styles.container}>
-        <h3 className="title">入金履歴</h3>
-        <div className="AllHistory">
-          {plusHistory.map((his: History) => (
-          <div className={styles.history} key={his.id}>
-            <span className={styles.time}>{format(his.time, 'yyyy/MM/dd/HH:mm:ss')}</span>
-            <Button className={styles.deleteBtn} variant="danger" onClick={() => handlePlusDelete(his)}>消去</Button>{' '}
-            <h4 className={styles.SecTitle}>{his.content}</h4>
-            <p className={styles.number}>{his.price}円</p>
-          </div>
-          ))}
+    <div className={styles.historyContainer}>
+      <div className={styles.subContainer}>
+        <h3>入金履歴</h3>
+        {storagePlusHistory.map((his: typeHistory) => (
+        <div className={styles.historyItem} key={his.id}>
+          <span className={styles.time}>{format(his.time, 'yyyy/MM/dd/HH:mm:ss')}</span>
+          <Button
+           className={styles.deleteBtn} 
+           variant="danger" 
+           onClick={() => handleDeletePlus(his)}
+          >消去</Button>{' '}
+          <h4 className={styles.title}>{his.content}</h4>
+          <p className={styles.money}>{his.price}円</p>
         </div>
+        ))}
       </div>
-      <div className={styles.container}>
-        <h3 className="title">出金履歴</h3>
-        <div className="AllHistory">
-          {minusHistory.map((his: History) => (
-          <div className={styles.history} key={his.time}>
-            <Button className={styles.deleteBtn} variant="danger" onClick={() => handleMinusDelete(his)}>消去</Button>{' '}
-            <h4 className={styles.SecTitle}>{his.content}</h4>
-            <p className={styles.number}>{his.price}円</p>
-          </div>
-          ))}
+      <div className={styles.subContainer}>
+        <h3>出金履歴</h3>
+        {storageMinusHistory.map((his: typeHistory) => (
+        <div className={styles.historyItem} key={his.id}>
+          <span className={styles.time}>{format(his.time, 'yyyy/MM/dd/HH:mm:ss')}</span>
+          <Button 
+            className={styles.deleteBtn} 
+            variant="danger" 
+            onClick={() => handleDeleteMinus(his)}
+          >消去</Button>{' '}
+          <h4 className={styles.title}>{his.content}</h4>
+          <p className={styles.money}>{his.price}円</p>
         </div>
+        ))}
       </div>
     </div>
   )
