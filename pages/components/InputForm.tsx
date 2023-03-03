@@ -26,7 +26,7 @@ const InputForm = () => {
     clearPlusContentRef.current.value = "";
     if (plus <= 100000) {
       setCounter((prev) => prev + plus);
-      handlePutDataPlus();
+      handlePutPlusData();
     } else {
       return;
     }
@@ -37,21 +37,21 @@ const InputForm = () => {
     clearMinusContentRef.current.value = "";
     if (minus <= 100000) {
       setCounter((prev) => prev - minus);
-      handlePutDataMinus();
+      handlePutMinusData();
     } else {
       return;
     }
   }
 
   //firestoreに履歴データを格納
-  const handlePutDataPlus = async () => {
+  const handlePutPlusData = async () => {
     const docRef = await addDoc(collection(db, "plusHistory"), {
       content: plusContent,
       price: plus,
       time: new Date(),
     });
   }
-  const handlePutDataMinus = async () => {
+  const handlePutMinusData = async () => {
     const docRef = await addDoc(collection(db, "minusHistory"), {
       content: minusContent,
       price: minus,
