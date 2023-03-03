@@ -54,7 +54,7 @@
     height: 40px;
     margin-top: 18px;
   }
-} @media screen and (max-width: 1150px) {
+} @media screen and (max-width: 1160px) {
   .inputFormContainer {
     margin-top: 10px;
     display: flex;
