@@ -72,7 +72,7 @@ const InputForm = () => {
                 <div className={styles.formControlContainer}>
                   <Form.Control 
                     type="text" 
-                    placeholder="入金内容(例: 給料)" 
+                    placeholder="何で増えた？(文字)" 
                     className='plusContent' 
                     required 
                     onChange={(e) => setPlusContent(e.target.value)} 
@@ -80,7 +80,7 @@ const InputForm = () => {
                   />
                   <Form.Control 
                     type="number" 
-                    placeholder="入金額(例: 1000)" 
+                    placeholder="何円増えた？(数字)" 
                     className='plusNumber' 
                     required 
                     onChange={(e) => setPlus(parseInt(e.target.value))} 
@@ -90,7 +90,7 @@ const InputForm = () => {
                 </div>
               </Form.Group>
               <Button variant="primary" type="submit" className={styles.button}>
-                確認
+                保存
               </Button>
             </div>
           </Form>
@@ -104,7 +104,7 @@ const InputForm = () => {
                 <div className={styles.formControlContainer}>
                   <Form.Control 
                     type="text" 
-                    placeholder="出金内容(例: 食事代)" 
+                    placeholder="何に使った？(文字)" 
                     className='minusContent' 
                     required 
                     onChange={(e) => setMinusContent(e.target.value)} 
@@ -112,7 +112,7 @@ const InputForm = () => {
                   />
                   <Form.Control 
                     type="number" 
-                    placeholder="出金額(例: 1000)" 
+                    placeholder="何円使った？(数字)" 
                     className='minusNumber' 
                     onChange={(e) => setMinus(parseInt(e.target.value))} 
                     ref={clearMinusRef} 
@@ -122,7 +122,7 @@ const InputForm = () => {
                 </div>
               </Form.Group>
               <Button variant="danger" type="submit" className={styles.button}>
-                確認
+                保存
               </Button>
             </div>
           </Form>

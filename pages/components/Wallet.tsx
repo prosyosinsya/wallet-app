@@ -57,7 +57,7 @@ const Wallet = (
   return (
     <div>
       <span className='text-center'>
-        <h3 className="fs-3">所持金</h3>
+        <h3 className="fs-3">あなたの所持金は</h3>
         <div className={styles.formContainer}>
           <span className={styles.money}>
             {props.counter}円
