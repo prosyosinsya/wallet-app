@@ -2,14 +2,15 @@
 家計簿アプリです。
 少額の家計管理を行うことができます。
 レスポンシブ対応してますので、スマホからでもご確認いただけます。
+![IMG_1010](https://user-images.githubusercontent.com/93925287/224485455-938dc228-74d1-45ca-8bea-62738b49b51c.jpeg)
 
 # URL
 https://my-money-phi.vercel.app
 
 # 使用技術
-*Next.js
-*TypeScript
-*Firestore
+- Next.js
+- TypeScript
+- Firestore
 
 # 機能一覧
 1. 投稿機能
