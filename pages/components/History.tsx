@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react'
-import styles from "../../styles/components.css/History.module.css"
+import styles from "../../styles/components.css/History.module.scss"
 import Button from 'react-bootstrap/Button'
 import db from "../../firebase"
 import { doc, collection, deleteDoc, DocumentData, onSnapshot, query, limit, orderBy} from "firebase/firestore"

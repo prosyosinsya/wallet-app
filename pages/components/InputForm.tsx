@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import styles from "../../styles/components.css/InputForm.module.css";
+import styles from "../../styles/components.css/InputForm.module.scss";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Wallet from './Wallet';
@@ -64,7 +64,7 @@ const InputForm = () => {
       <Wallet counter={counter} setCounter={setCounter}/>
       <div className={styles.inputFormContainer}>
         <div className='plus'>
-          <h2>収入</h2>
+          <h2 className={styles.secTitle}>収入</h2>
           <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handlePlus(e)}>
             <div className={styles.flex}>
               <Form.Group className={styles.flex}  controlId="formBasicEmail">
@@ -96,7 +96,7 @@ const InputForm = () => {
           </Form>
         </div>
         <div className='minus'>
-          <h2>出費</h2>
+          <h2 className={styles.secTitle}>出費</h2>
           <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleMinus(e)}>
             <div className={styles.flex}>
               <Form.Group className={styles.flex}  controlId="formBasicEmail">

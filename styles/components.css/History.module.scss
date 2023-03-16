@@ -1,0 +1,77 @@
+.historyContainer {
+  display: flex;
+  justify-content: space-evenly;
+  gap: 30px;
+  width: 100%;
+  
+  .subContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    
+    .historyItem {
+      display: flex;
+      width: 520px;
+      height: 40px;
+      margin-bottom: 30px;
+      line-height: 40px;
+      border: 2px solid black;
+      border-radius: 5px;
+      box-shadow: 5px 7px 0px 0px #777777;
+      position: relative;
+
+      .time {
+        position: absolute;
+        top: -32px;
+      }
+      
+      .deleteBtn {
+        width: 80px;
+        border-radius: 0px;
+      }
+      
+      .title {
+        width: 70%;
+        height: 38px;
+        line-height: 38px;
+        padding-left: 5px;
+        border-right: 2px solid black;
+      }
+      
+      .money {
+        width: 30%;
+        height: 38px;
+        line-height: 38px;
+        padding-left: 5px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 605px) {
+  .historyContainer {
+    .subContainer {
+      .historyItem {
+        width: 360px;
+        .time {
+          font-size: 5px;
+        }
+        .title {
+          font-size: 15px;
+        }
+        .money {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+} @media screen and (max-width: 1160px) {
+  .historyContainer {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  } 
+}
