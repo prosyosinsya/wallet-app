@@ -44,7 +44,7 @@ const History = (
     });
   }, []);
 
-  //履歴を消す際の処理
+  //履歴を消す際に所持金を調整する処理
   const handleDeletePlus = async (his: typeHistory) => {
     await deleteDoc(doc(db, "plusHistory", his.id));
     props.setCounter((prev) => prev - his.price);

@@ -40,19 +40,17 @@ const Wallet = (
     setSave(true);
   }
 
-  //保存してなかったら確認、してたらそのまま退出
+  //退出前に確認
   const beforeUnloadhandler = (event: BeforeUnloadEvent) => {
-      event.returnValue = "check";
+    event.returnValue = "check";
   }
   useEffect(() => {
     window.addEventListener('beforeunload', beforeUnloadhandler);
-    if (save == true) {
-      window.removeEventListener('beforeunload', beforeUnloadhandler);
-    }
+
     return () => {
       window.removeEventListener('beforeunload', beforeUnloadhandler);
     };
-  }, [save])
+  }, [])
 
   return (
     <div>
